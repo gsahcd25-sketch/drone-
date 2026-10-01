@@ -27,3 +27,45 @@
 ---
 
 ## 📅 2. KẾ HOẠCH & TIẾN ĐỘ 5 GIAI ĐOẠN (ROADMAP)
+### 🎯 Giai đoạn 1: Bổ sung phần cứng & Dựng khung chuẩn (01/10/2026 – 15/10/2026)
+- [x] Test kết nối cơ bản: STM32 + MPU6050 + ESC + Motor.
+- [ ] Mua bổ sung: GPS, Cánh quạt 3-inch, Cảm biến con lắc/độ cao.
+- [ ] Hàn nối, đi dây gọn gàng, cách ly chống nhiễu từ tính cho La bàn số và GPS.
+- [ ] Đo đạc tổng trọng lượng (AUW) và tính toán lực đẩy (Thrust-to-Weight ratio).
+
+### 🎯 Giai đoạn 2: Lập trình phần mềm cơ bản (16/10/2026 – 31/10/2026)
+- [x] Lập trình đọc MPU6050 & xuất xung PWM/DShot ra ESC để thay đổi tốc độ motor theo góc nghiêng.
+- [ ] Lập trình bộ lọc dữ liệu cảm biến (Complementary Filter hoặc Kalman Filter).
+- [ ] Viết vòng băm PID cho 3 trục (Roll, Pitch, Yaw) để giữ cân bằng.
+- [ ] Giải mã dữ liệu GPS (NMEA Protocol) và dữ liệu La bàn số qua STM32.
+
+### 🎯 Giai đoạn 3: Bay thử nghiệm & Hệ thống đo đạc hiệu suất (01/11/2026 – 15/11/2026)
+- [ ] **Xây dựng Rig test (Khung thử nghiệm):** Dựng giá treo cố định 1 trục / 3 trục để test PID an toàn.
+- [ ] **Đo đạc hiệu suất (Test Bench):** 
+  - Đo lực kéo (Thrust), dòng điện tiêu thụ (Amperes), nhiệt độ motor ở các mức ga (25%, 50%, 75%, 100%).
+  - Chọn lọc quy trình chuẩn hóa: Áp dụng các quy trình kiểm thử phổ thông trước (Pre-flight checklist), sau đó tinh chỉnh thành quy trình tối ưu riêng.
+- [ ] Bay cất cánh thực tế trong nhà/không gian hẹp ở chế độ Acro/Angle.
+
+### 🎯 Giai đoạn 4: Thử nghiệm & Phát triển thuật toán Return To Home (RTH) (16/11/2026 – 15/12/2026)
+- [ ] Lập trình thuật toán lưu tọa độ điểm cất cánh (Home Point).
+- [ ] Viết logic tính toán góc quay (Heading) và khoảng cách từ vị trí hiện tại về Home Point bằng dữ liệu GPS + Magnetometer.
+- [ ] Thử nghiệm các kịch bản RTH ban đầu:
+  1. Tự động tăng độ cao an toàn (Safe Altitude).
+  2. Quay đầu về hướng Home Point.
+  3. Di chuyển về tọa độ Home Point.
+  4. Hạ cánh tự động hoặc trả quyền điều khiển cho phi công.
+
+### 🎯 Giai đoạn 5: Tinh gọn phần cứng & Tối ưu hóa phần mềm (16/12/2026 – 01/01/2027)
+- [ ] Tối ưu hóa trọng lượng, tích hợp gọn gàng Camera Insta360 GO 3S phục vụ trinh sát.
+- [ ] Tinh chỉnh tham số PID & cấu trúc code trên STM32 để tiết kiệm năng lượng, tăng thời gian bay.
+- [ ] Đóng gói tài liệu báo cáo kỹ thuật toàn bộ dự án.
+
+---
+
+## 🛠️ 3. BÁO CÁO LỖI & PHƯƠNG PHÁP XỬ LÝ (BUG TRACKING)
+
+| Mã lỗi | Mô tả sự cố / Hiện tượng | Nguyên nhân dự đoán | Phương pháp khắc phục | Trạng thái |
+| :---: | :----------------------- | :------------------ | :-------------------- | :---------: |
+| #ERR01 | Động cơ phản ứng chậm khi nghiêng khung | Chu kỳ đọc MPU6050 hoặc tần số vòng lặp PID quá thấp | Chuyển sang đọc MPU6050 qua ngắt (Interrupt) & tăng tần số PWM | 🟡 Đang xử lý |
+| #ERR02 | Nhiễu góc quay khi chạy động cơ | Nhiễu từ tính do dòng điện lớn từ ESC làm lệch La bàn số | Dời La bàn số lên vị trí cao, cách xa dây nguồn chính | 🔴 Chờ test |
+| #ERR03 | Trôi tọa độ GPS (GPS Drift) | Tín hiệu vệ tinh yếu khi bay thấp | Cấu hình lọc HDOP < 2.0 mới cho phép lưu Home Point | 🔴 Chờ test |
