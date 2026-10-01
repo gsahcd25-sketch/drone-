@@ -20,9 +20,11 @@
 | 5 | Nguồn cấp (Battery) | Pin LiPo 2S | 🟢 Có sẵn | Tối ưu khối lượng |
 | 6 | Khung Drone (Frame) | Khung 3-inch (Carbon) | 🟢 Có sẵn | Thiết kế nhỏ gọn |
 | 7 | Động cơ & ESC | Brushless Motors + ESC | 🟢 Có sẵn | Đã test điều khiển |
-| 8 | Định vị toàn cầu (GPS) | GPS Module (M8N/M9N) | 🔴 Còn thiếu | Cần mua (Phục vụ RTH) |
-| 9 | Cánh quạt (Propellers) | Cánh 3-inch (3016/3020) | 🔴 Còn thiếu | Cần mua thử nghiệm |
-| 10 | Cảm biến độ cao (Barometer/LiDAR)| BMP280 / VL53L1X | 🔴 Còn thiếu | Cần mua để giữ độ cao |
+| 8 | Tay điều khiển & Mạch thu (TX/RX) | Microzone | 🟢 Có sẵn | Bàn điều khiển sóng RF |
+| 9 | Định vị toàn cầu (GPS) | GPS Module (M8N/M9N) | 🔴 Còn thiếu | Cần mua (Phục vụ RTH) |
+| 10 | Cánh quạt (Propellers) | Cánh 3-inch (3016/3020) | 🔴 Còn thiếu | Cần mua thử nghiệm |
+| 11 | Cảm biến độ cao (Barometer/LiDAR)| BMP280 / VL53L1X | 🔴 Còn thiếu | Cần mua để giữ độ cao |
+
 
 ---
 
