@@ -69,3 +69,33 @@
 | #ERR01 | Động cơ phản ứng chậm khi nghiêng khung | Chu kỳ đọc MPU6050 hoặc tần số vòng lặp PID quá thấp | Chuyển sang đọc MPU6050 qua ngắt (Interrupt) & tăng tần số PWM | 🟡 Đang xử lý |
 | #ERR02 | Nhiễu góc quay khi chạy động cơ | Nhiễu từ tính do dòng điện lớn từ ESC làm lệch La bàn số | Dời La bàn số lên vị trí cao, cách xa dây nguồn chính | 🔴 Chờ test |
 | #ERR03 | Trôi tọa độ GPS (GPS Drift) | Tín hiệu vệ tinh yếu khi bay thấp | Cấu hình lọc HDOP < 2.0 mới cho phép lưu Home Point | 🔴 Chờ test |
+---
+
+## 🤖 4. CHIẾN LƯỢC TÍCH HỢP AI & PHÂN TÁCH VAI TRÒ (HUMAN vs AI)
+
+### 4.1. Vai trò của AI trong dự án
+- **Hỗ trợ viết & Review code:** AI đóng vai trò là "Trợ lý lập trình", gợi ý cấu trúc toán học (Kalman Filter, công thức Haversine tính khoảng cách GPS), giải thích register của STM32, phát hiện lỗi cú pháp.
+- **Phân tích dữ liệu Log:** Tải dữ liệu sensor/PID thu được từ quá trình test bench lên AI để nhờ phân tích đồ thị dao động và gợi ý tham số PID.
+- **Tối ưu quy trình:** AI gợi ý danh mục kiểm tra an toàn (Checklist) tiêu chuẩn quốc tế.
+
+### 4.2. Giới hạn tự làm (Nếu KHÔNG có AI)
+- **Khả năng tự chủ:** Vẫn hoàn thành được phần cứng, cân bằng PID cơ bản và điều khiển bằng tay.
+- **Điểm nghẽn khi thiếu AI:** Tốn nhiều thời gian tự đọc Datasheet chi tiết của STM32/MPU6050, mất thời gian tự giải hệ phương trình vi phân / ma trận toán học cho bộ lọc Kalman và công thức tính tọa độ RTH.
+
+### 4.3. Nguyên tắc phân tách vai trò (Tách biệt Con người và AI)
+1. **Con người nắm quyền quyết định tối cao (Human-in-the-loop):** AI chỉ gợi ý giải pháp, con người là người duyệt code, kiểm tra tính an toàn trước khi nạp vào STM32 và cắm pin.
+2. **AI không làm thay phần thực hành:** AI không thể hàn mạch, không thể đo đạc lực kéo trên Rig test hay cảm nhận độ rung thực tế của Frame.
+3. **Kiểm tra chéo (Cross-verification):** Mọi đoạn code thuật toán do AI sinh ra (nhất là code can thiệp trực tiếp vào ESC/Motor) đều phải qua kiểm thử từng phần trên bàn test trước khi cho cất cánh.
+
+---
+
+## 🎓 5. KẾT QUẢ ĐẠT ĐƯỢC & BÀI HỌC THU HOẠCH (LEARNING OUTCOMES)
+
+### 💡 Khả năng tự chủ phát triển
+- Tự chủ 100% quy trình thiết kế, tích hợp hệ thống nhúng điều khiển bay từ mức mạch holic (Bare-metal/HAL) đến ứng dụng thực tế.
+
+### 📚 Kiến thức & Kỹ năng thu được
+1. **Lập trình hệ thống nhúng nâng cao:** Làm chủ vi điều khiển STM32, giao tiếp I2C, SPI, UART, PWM, DShot.
+2. **Xử lý tín hiệu & Thuật toán điều khiển:** Hiểu sâu bộ lọc dữ liệu (Kalman/Complementary), thuật toán điều khiển phản hồi vòng kín PID.
+3. **Hệ thống định vị & RTH:** Hiểu cơ chế hoạt động của GPS, La bàn số, công thức lượng giác trên mặt cầu (Haversine Formula) để điều hướng.
+4. **Kỹ năng thử nghiệm & Tối ưu hóa:** Xây dựng hệ thống test bench đo đạc hiệu suất động cơ, quy trình quản lý dự án kỹ thuật chuẩn mực.
